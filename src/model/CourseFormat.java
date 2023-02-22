@@ -2,25 +2,34 @@ package model;
 
 public class CourseFormat extends BaseEntity {
     private String format;
-    private  int durationInBeek;
+    private  int durationInWeek;
     private  boolean isOnline;
-    private  int lessonDurationPerHour;
+    private  int lessonDuration;
     private  int getLessonDurationPerWeek;
+    private int lessonCountPerWeek;
 
     public String getFormat() {
         return format;
+    }
+
+    public int getLessonCountPerWeek() {
+        return lessonCountPerWeek;
+    }
+
+    public void setLessonCountPerWeek(int lessonCountPerWeek) {
+        this.lessonCountPerWeek = lessonCountPerWeek;
     }
 
     public void setFormat(String format) {
         this.format = format;
     }
 
-    public int getDurationInBeek() {
-        return durationInBeek;
+    public int getDurationInWeek() {
+        return durationInWeek;
     }
 
-    public void setDurationInBeek(int durationInBeek) {
-        this.durationInBeek = durationInBeek;
+    public void setDurationInWeek(int durationInWeek) {
+        this.durationInWeek = durationInWeek;
     }
 
     public boolean isOnline() {
@@ -31,12 +40,14 @@ public class CourseFormat extends BaseEntity {
         isOnline = online;
     }
 
-    public int getLessonDurationPerHour() {
-        return lessonDurationPerHour;
+
+
+    public int getLessonDuration() {
+        return lessonDuration;
     }
 
-    public void setLessonDurationPerHour(int lessonDurationPerHour) {
-        this.lessonDurationPerHour = lessonDurationPerHour;
+    public void setLessonDuration(int lessonDuration) {
+        this.lessonDuration = lessonDuration;
     }
 
     public int getGetLessonDurationPerWeek() {

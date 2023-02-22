@@ -2,10 +2,25 @@ package model;
 
 public class Course  extends  BaseEntity{
     private String name;
-    private double prise;
+    private double price;
     private CourseFormat courseFormat;
 
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public CourseFormat getCourseFormat() {
+        return courseFormat;
+    }
+
+    public void setCourseFormat(CourseFormat courseFormat) {
+        this.courseFormat = courseFormat;
+    }
 
     public String getName() {
         return name;
@@ -15,11 +30,5 @@ public class Course  extends  BaseEntity{
         this.name = name;
     }
 
-    public double getPrise() {
-        return prise;
-    }
 
-    public void setPrise(double prise) {
-        this.prise = prise;
-    }
 }
