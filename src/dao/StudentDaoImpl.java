@@ -29,9 +29,10 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void save(Student student) {
+        int count = getCount();
         try {
             PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
-            out.print(student.getId() + " ");
+            out.print(++count + " ");
             out.print(student.getName() + " ");
             out.print(student.getSurname() + " ");
             out.print(student.getGmail() + " ");
@@ -71,6 +72,22 @@ public class StudentDaoImpl implements StudentDao {
 
 
         return students;
+    }
+
+    public int getCount() {
+        int count = 0;
+        try {
+
+            Scanner scanner = new Scanner(STUDENT_FILE);
+            while (scanner.hasNextLine()) {
+                count++;
+                scanner.nextLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override

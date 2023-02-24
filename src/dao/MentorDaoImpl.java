@@ -29,10 +29,11 @@ public class MentorDaoImpl implements MentorDao {
 
     @Override
     public void save(Mentor mentor) {
+        int count = getCount();
         try {
 
             PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
-            out.print(mentor.getId() + " ");
+            out.print(++count + " ");
             out.print(mentor.getName() + " ");
             out.print(mentor.getSurname() + " ");
             out.print(mentor.getGmail() + " ");
@@ -70,6 +71,21 @@ public class MentorDaoImpl implements MentorDao {
             e.printStackTrace();
         }
         return  mentors;
+    }
+    public int getCount() {
+        int count = 0;
+        try {
+
+            Scanner scanner = new Scanner(MENTOR_FILE);
+            while (scanner.hasNextLine()) {
+                count++;
+                scanner.nextLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }

@@ -4,17 +4,18 @@ import model.Course;
 import model.CourseFormat;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class CourseFormatDaoImpl implements CourseFormatDao {
     private final String PATH_FILE = "C:\\Users\\Huawei\\IdeaProjects\\crmIT\\src\\lib\\CourseFormat.txt";
-    private final File COURSEFORMAT_FILE = new File(PATH_FILE);
+    private final File COURSE_FORMAT_FILE = new File(PATH_FILE);
 
     public CourseFormatDaoImpl() {
         boolean isCreated = false;
-        if (!COURSEFORMAT_FILE.exists()) {
+        if (!COURSE_FORMAT_FILE.exists()) {
             try {
-                isCreated = COURSEFORMAT_FILE.createNewFile();
+                isCreated = COURSE_FORMAT_FILE.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -26,6 +27,7 @@ public class CourseFormatDaoImpl implements CourseFormatDao {
 
     @Override
     public void save(CourseFormat courseFormat) {
+        int count = getCount();
         try {
             PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
             out.print(courseFormat.getId() + " ");
@@ -47,7 +49,7 @@ public class CourseFormatDaoImpl implements CourseFormatDao {
     public CourseFormat[] findAll() {
         CourseFormat[] courseFormats = new CourseFormat[100];
         try {
-            Scanner sc = new Scanner(COURSEFORMAT_FILE);
+            Scanner sc = new Scanner(COURSE_FORMAT_FILE);
             for (int i = 0; sc.hasNextLine(); i++) {
                 CourseFormat courseFormat = new CourseFormat();
 
@@ -58,6 +60,7 @@ public class CourseFormatDaoImpl implements CourseFormatDao {
                 courseFormat.setLessonDuration(sc.nextInt());
                 courseFormat.setGetLessonDurationPerWeek(sc.nextInt());
                 courseFormat.setLessonCountPerWeek(sc.nextInt());
+                courseFormat.setDateCreated(LocalDateTime.parse(sc.nextLine().substring(1)));
 
                 courseFormats[i] = courseFormat;
             }
@@ -65,5 +68,20 @@ public class CourseFormatDaoImpl implements CourseFormatDao {
             e.printStackTrace();
         }
         return courseFormats;
+    }
+    public int getCount() {
+        int count = 0;
+        try {
+
+            Scanner scanner = new Scanner(COURSE_FORMAT_FILE);
+            while (scanner.hasNextLine()) {
+                count++;
+                scanner.nextLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

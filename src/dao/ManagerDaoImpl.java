@@ -28,9 +28,10 @@ public class ManagerDaoImpl implements ManagerDao {
 
     @Override
     public void save(Manager manager) {
+        int count = getCount();
         try {
             PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
-            out.print(manager.getId() + " ");
+            out.print(++count + " ");
             out.print(manager.getName() + " ");
             out.print(manager.getSurname() + " ");
             out.print(manager.getGmail() + " ");
@@ -84,8 +85,7 @@ public class ManagerDaoImpl implements ManagerDao {
                 scanner.nextLine();
             }
 
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return count;

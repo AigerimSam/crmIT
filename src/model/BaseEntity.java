@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 public  abstract class BaseEntity {
-    private long id;
+    protected long id;
     private LocalDateTime dateCreated = LocalDateTime.now();
 
 
