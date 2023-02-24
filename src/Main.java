@@ -62,6 +62,6 @@ public class Main {
         student1.setPhone("dddd");
 
         studentDao.save(student1);
-
+        System.out.println(manager);
     }
 }

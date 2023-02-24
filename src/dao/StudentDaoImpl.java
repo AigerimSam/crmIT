@@ -5,6 +5,7 @@ import model.Student;
 
 import javax.swing.text.Style;
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -59,7 +60,7 @@ public class StudentDaoImpl implements StudentDao {
                 student.setSurname(scanner.next());
                 student.setGmail(scanner.next());
                 student.setPhone(scanner.next());
-                //  student.setDob(scanner.lo);
+                student.setDob(LocalDate.from(LocalDateTime.parse(scanner.nextLine().substring(1))));
                 student.setDateCreated(LocalDateTime.parse(scanner.nextLine().substring(1)));
 
                 students[i] = student;

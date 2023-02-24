@@ -6,7 +6,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class ManagerDaoImpl  implements ManagerDao{
+public class ManagerDaoImpl implements ManagerDao {
 
     private final String PATH_FILE = "C:\\Users\\Huawei\\IdeaProjects\\crmIT\\src\\lib\\Manager.txt";
     private final File MANAGER_FILE = new File(PATH_FILE);
@@ -48,7 +48,7 @@ public class ManagerDaoImpl  implements ManagerDao{
     @Override
     public Manager[] findAll() {
 //        int count = getCount();
-        Manager[] managers = new Manager[100];
+        Manager[] managers = new Manager[getCount()];
 
         try {
             Scanner scanner = new Scanner(MANAGER_FILE);
@@ -72,5 +72,22 @@ public class ManagerDaoImpl  implements ManagerDao{
 
 
         return managers;
+    }
+
+    public int getCount() {
+        int count = 0;
+        try {
+
+            Scanner scanner = new Scanner(MANAGER_FILE);
+            while (scanner.hasNextLine()) {
+                count++;
+                scanner.nextLine();
+            }
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return count;
     }
 }
