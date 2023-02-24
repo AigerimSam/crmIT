@@ -1,4 +1,5 @@
 import model.Manager;
+import model.User;
 
 import java.util.Scanner;
 
@@ -18,8 +19,8 @@ public class Shablon {
         manager.setPhone(sc.next());
         System.out.println("salary: ");
         manager.setSalary(sc.nextDouble());
-
-
         return manager;
     }
+
+
 }

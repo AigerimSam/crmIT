@@ -1,11 +1,5 @@
-import dao.ManagerDao;
-import dao.ManagerDaoImpl;
-import dao.MentorDao;
-import dao.MentorDaoImpl;
-import model.Course;
-import model.CourseFormat;
-import model.Manager;
-import model.Mentor;
+import dao.*;
+import model.*;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -31,7 +25,7 @@ public class Main {
 
         Shablon shablon = new Shablon();
         Manager manager = new Manager();
-        managerDao.save(shablon.saveScannerManager());
+      //  managerDao.save(shablon.saveScannerManager());
 
 
 
@@ -48,5 +42,26 @@ public class Main {
         mentor.setSalaryForLesson(1000);
         mentor.setExperience(3);
         mentorDao.save(mentor);
+
+
+        StudentDao studentDao = new StudentDaoImpl();
+        Student student = new Student();
+        student.setId(1);
+        student.setName("aaa");
+        student.setSurname("aaa");
+        student.setGmail("fff");
+        student.setPhone("dddd");
+
+        studentDao.save(student);
+
+        Student student1 = new Student();
+        student1.setId(2);
+        student1.setName("bbb");
+        student1.setSurname("bbb");
+        student1.setGmail("fff");
+        student1.setPhone("dddd");
+
+        studentDao.save(student1);
+
     }
 }
