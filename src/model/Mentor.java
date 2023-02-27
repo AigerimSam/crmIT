@@ -2,7 +2,7 @@ package model;
 
 public class Mentor extends User {
     private double experience;
-    private double  salaryForLesson;
+    private double salaryForLesson;
 
     public double getExperience() {
         return experience;
@@ -19,4 +19,6 @@ public class Mentor extends User {
     public void setSalaryForLesson(double salaryForLesson) {
         this.salaryForLesson = salaryForLesson;
     }
+
+
 }

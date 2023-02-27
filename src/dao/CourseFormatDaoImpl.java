@@ -1,5 +1,6 @@
 package dao;
 
+import enums.Format;
 import model.Course;
 import model.CourseFormat;
 
@@ -26,16 +27,16 @@ public class CourseFormatDaoImpl implements CourseFormatDao {
     }
 
     @Override
-    public void save(CourseFormat courseFormat) {
+    public void save(CourseFormat courseFormat) throws IOException {
         int count = getCount();
+        PrintWriter out = null;
         try {
-            PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
-            out.print(courseFormat.getId() + " ");
+             out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
+            out.print(++count + " ");
             out.print(courseFormat.getFormat() + " ");
             out.print(courseFormat.getDurationInWeek() + " ");
             out.print(courseFormat.isOnline() + " ");
             out.print(courseFormat.getLessonDuration() + " ");
-            out.print(courseFormat.getGetLessonDurationPerWeek() + " ");
             out.print(courseFormat.getLessonCountPerWeek() + " ");
             out.print(courseFormat.getDateCreated().toString().substring(0, 22));
             out.println();
@@ -43,22 +44,25 @@ public class CourseFormatDaoImpl implements CourseFormatDao {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        finally {
+            close(out);
+        }
     }
 
     @Override
-    public CourseFormat[] findAll() {
+    public CourseFormat[] findAll() throws IOException {
         CourseFormat[] courseFormats = new CourseFormat[100];
+        Scanner sc = null;
         try {
-            Scanner sc = new Scanner(COURSE_FORMAT_FILE);
+             sc = new Scanner(COURSE_FORMAT_FILE);
             for (int i = 0; sc.hasNextLine(); i++) {
                 CourseFormat courseFormat = new CourseFormat();
 
                 courseFormat.setId(sc.nextLong());
-                courseFormat.setFormat(sc.next());
+                courseFormat.setFormat(Format.valueOf(sc.nextLine()));
                 courseFormat.setDurationInWeek(sc.nextInt());
                 courseFormat.setOnline(sc.nextBoolean());
                 courseFormat.setLessonDuration(sc.nextInt());
-                courseFormat.setGetLessonDurationPerWeek(sc.nextInt());
                 courseFormat.setLessonCountPerWeek(sc.nextInt());
                 courseFormat.setDateCreated(LocalDateTime.parse(sc.nextLine().substring(1)));
 
@@ -67,8 +71,12 @@ public class CourseFormatDaoImpl implements CourseFormatDao {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        finally {
+            close(sc);
+        }
         return courseFormats;
     }
+
     public int getCount() {
         int count = 0;
         try {

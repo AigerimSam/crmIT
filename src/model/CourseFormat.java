@@ -1,26 +1,32 @@
 package model;
 
+import enums.Format;
+
 public class CourseFormat extends BaseEntity {
-    private String format;
-    private  int durationInWeek;
-    private  boolean isOnline;
-    private  int lessonDuration;
-    private  int getLessonDurationPerWeek;
+    private Format format;
+    private int durationInWeek;
+    private boolean isOnline;
+    private int lessonDuration;
     private int lessonCountPerWeek;
 
-    public String getFormat() {
+    @Override
+    public String toString() {
+        return "CourseFormat{" +
+                "id=" + id +
+                ", format=" + format.getA() +
+                ", durationInWeek=" + durationInWeek +
+                ", isOnline=" + isOnline +
+                ", lessonDuration=" + lessonDuration +
+                ", lessonCountPerWeek=" + lessonCountPerWeek +
+                ", dateCreated=" + dateCreated +
+                '}';
+    }
+
+    public Format getFormat() {
         return format;
     }
 
-    public int getLessonCountPerWeek() {
-        return lessonCountPerWeek;
-    }
-
-    public void setLessonCountPerWeek(int lessonCountPerWeek) {
-        this.lessonCountPerWeek = lessonCountPerWeek;
-    }
-
-    public void setFormat(String format) {
+    public void setFormat(Format format) {
         this.format = format;
     }
 
@@ -40,8 +46,6 @@ public class CourseFormat extends BaseEntity {
         isOnline = online;
     }
 
-
-
     public int getLessonDuration() {
         return lessonDuration;
     }
@@ -50,11 +54,11 @@ public class CourseFormat extends BaseEntity {
         this.lessonDuration = lessonDuration;
     }
 
-    public int getGetLessonDurationPerWeek() {
-        return getLessonDurationPerWeek;
+    public int getLessonCountPerWeek() {
+        return lessonCountPerWeek;
     }
 
-    public void setGetLessonDurationPerWeek(int getLessonDurationPerWeek) {
-        this.getLessonDurationPerWeek = getLessonDurationPerWeek;
+    public void setLessonCountPerWeek(int lessonCountPerWeek) {
+        this.lessonCountPerWeek = lessonCountPerWeek;
     }
 }

@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 public abstract class User  extends  BaseEntity{
 
-    private String surname;
-    private String name;
-    private String phone;
-    private String gmail;
+    protected String surname;
+    protected String name;
+    protected String phone;
+    protected String gmail;
 
     public String getSurname() {
         return surname;
@@ -39,5 +39,15 @@ public abstract class User  extends  BaseEntity{
 
     public void setGmail(String gmail) {
         this.gmail = gmail;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gmail='" + gmail + '\'' +
+                '}';
     }
 }

@@ -28,11 +28,12 @@ public class MentorDaoImpl implements MentorDao {
 
 
     @Override
-    public void save(Mentor mentor) {
+    public void save(Mentor mentor) throws IOException {
         int count = getCount();
+        PrintWriter out = null;
         try {
 
-            PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
+            out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
             out.print(++count + " ");
             out.print(mentor.getName() + " ");
             out.print(mentor.getSurname() + " ");
@@ -42,21 +43,23 @@ public class MentorDaoImpl implements MentorDao {
             out.print(mentor.getDateCreated().toString().substring(0, 22));
             out.println();
             out.close();
-        }
-        catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("error");
+        } finally {
+            close(out);
         }
     }
 
     @Override
-    public Mentor[] findAll() {
-        Mentor [] mentors = new Mentor[100];
+    public Mentor[] findAll() throws IOException {
+        Mentor[] mentors = new Mentor[getCount()];
+        Scanner scanner = null;
         try {
-            Scanner scanner = new Scanner(MENTOR_FILE);
+            scanner = new Scanner(MENTOR_FILE);
 
-            for (int i = 0; scanner.hasNextLine() ; i++) {
-                 Mentor mentor = new Mentor();
+            for (int i = 0; scanner.hasNextLine(); i++) {
+                Mentor mentor = new Mentor();
                 mentor.setId(scanner.nextLong());
                 mentor.setName(scanner.next());
                 mentor.setGmail(scanner.next());
@@ -69,9 +72,12 @@ public class MentorDaoImpl implements MentorDao {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            close(scanner);
         }
-        return  mentors;
+        return mentors;
     }
+
     public int getCount() {
         int count = 0;
         try {

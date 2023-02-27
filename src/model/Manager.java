@@ -10,4 +10,5 @@ public class Manager extends  User {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
 }

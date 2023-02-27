@@ -2,9 +2,11 @@ package dao;
 
 import model.Manager;
 
-public interface ManagerDao {
+import java.io.IOException;
 
-    void save(Manager manager);
+public interface ManagerDao extends CrudDao {
 
-    Manager[] findAll();
+    void save(Manager manager) throws IOException;
+
+    Manager[] findAll() throws IOException;
 }

@@ -28,10 +28,11 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void save(Student student) {
+    public void save(Student student) throws IOException {
         int count = getCount();
+        PrintWriter out = null;
         try {
-            PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
+            out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
             out.print(++count + " ");
             out.print(student.getName() + " ");
             out.print(student.getSurname() + " ");
@@ -43,15 +44,17 @@ public class StudentDaoImpl implements StudentDao {
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            close(out);
         }
     }
 
     @Override
-    public Student[] findAll() {
-        Student[] students = new Student[100];
-
+    public Student[] findAll() throws IOException {
+        Student[] students = new Student[getCount()];
+        Scanner scanner = null;
         try {
-            Scanner scanner = new Scanner(STUDENT_FILE);
+            scanner = new Scanner(STUDENT_FILE);
 
             for (int i = 0; scanner.hasNextLine(); i++) {
                 Student student = new Student();
@@ -61,13 +64,16 @@ public class StudentDaoImpl implements StudentDao {
                 student.setSurname(scanner.next());
                 student.setGmail(scanner.next());
                 student.setPhone(scanner.next());
-                student.setDob(LocalDate.from(LocalDateTime.parse(scanner.nextLine().substring(1))));
-                student.setDateCreated(LocalDateTime.parse(scanner.nextLine().substring(1)));
+                student.setDob((LocalDateTime.parse(scanner.nextLine().substring(12))));
+                student.setDateCreated(LocalDateTime.parse(student.getDateCreated().toString().substring(0, 22)));
 
                 students[i] = student;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+        finally {
+            close(scanner);
         }
 
 

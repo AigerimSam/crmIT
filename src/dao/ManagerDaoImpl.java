@@ -27,10 +27,11 @@ public class ManagerDaoImpl implements ManagerDao {
     }
 
     @Override
-    public void save(Manager manager) {
+    public void save(Manager manager) throws IOException {
         int count = getCount();
+        PrintWriter out = null;
         try {
-            PrintWriter out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
+             out = new PrintWriter(new FileOutputStream(PATH_FILE, true));
             out.print(++count + " ");
             out.print(manager.getName() + " ");
             out.print(manager.getSurname() + " ");
@@ -44,15 +45,18 @@ public class ManagerDaoImpl implements ManagerDao {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        finally {
+            close(out);
+        }
     }
 
     @Override
-    public Manager[] findAll() {
+    public Manager[] findAll() throws IOException {
 //        int count = getCount();
         Manager[] managers = new Manager[getCount()];
-
+        Scanner scanner = null;
         try {
-            Scanner scanner = new Scanner(MANAGER_FILE);
+             scanner = new Scanner(MANAGER_FILE);
 
             for (int i = 0; scanner.hasNextLine(); i++) {
                 Manager manager = new Manager();
@@ -69,6 +73,9 @@ public class ManagerDaoImpl implements ManagerDao {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+        finally {
+            close(scanner);
         }
 
 

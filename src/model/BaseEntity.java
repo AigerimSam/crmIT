@@ -1,11 +1,9 @@
 package model;
 
 import java.time.LocalDateTime;
-
 public  abstract class BaseEntity {
     protected long id;
-    private LocalDateTime dateCreated = LocalDateTime.now();
-
+    protected LocalDateTime dateCreated = LocalDateTime.now();
 
     public long getId() {
         return id;

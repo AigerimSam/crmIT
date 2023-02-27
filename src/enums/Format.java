@@ -1,6 +1,16 @@
 package enums;
 
 public enum Format {
-    BOOTCAMP,
-    ORDINARY;
+    BOOTCAMP("bootcamp"),
+    ORDINARY("ordinary");
+
+    String a;
+     Format(String a) {
+    }
+
+    public String getA() {
+        return a;
+    }
+
+
 }

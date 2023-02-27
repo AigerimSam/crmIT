@@ -1,11 +1,15 @@
 import dao.*;
 import enums.CommandForDAO;
+import enums.CommandForEntity;
+import exeptions.WrongCommandEx;
 import model.*;
 
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static enums.CommandForDAO.*;
+import static enums.CommandForEntity.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,51 +21,53 @@ public class Main {
         ManagerDao managerDao = new ManagerDaoImpl();
         MentorDao mentorDao = new MentorDaoImpl();
 
-        boolean isAct = true;
-        while (isAct) {
-            System.out.println("choose: ");
-            System.out.println(FINDALL);
-            System.out.println(SAVE);
-            System.out.println(CLOSE);
-            CommandForDAO command = valueOf(sc.nextLine());
-            switch (command) {
-                case CLOSE:
-                    System.out.println("вы вышли из программы");
-                    isAct = false;
-                    break;
-                case SAVE:
-                    System.out.println("кого хотите зарегистировать?");
-                    System.out.println(STUDENT);
-                    System.out.println(MANAGER);
-                    System.out.println(MENTOR);
-                    CommandForDAO command1 = valueOf(sc.nextLine());
-                    switch (command1) {
-                        case STUDENT:
-                            System.out.println("сохранен");
-                            studentDao.save(shablon.saveScannerStudent());
-                            break;
-                        case MANAGER:
-                            System.out.println("сохранен");
-                            managerDao.save(shablon.saveScannerManager());
-                            break;
-                        case MENTOR:
-                            System.out.println("сохранен");
-                            mentorDao.save(shablon.saveScannerMentor());
-                            break;
-                    }
-                case FINDALL:
-                    System.out.println("найти список : ");
-                    System.out.println(STUDENT);
-                    System.out.println(MANAGER);
-                    System.out.println(MENTOR);
-                case STUDENT:
-                    studentDao.findAll();
-                    break;
-                case MANAGER:
-                    managerDao.findAll();
-                    break;
-                case MENTOR:
-                    mentorDao.findAll(); break;
+        loop:
+        while (true) {
+            shablon.crudCommand();
+            CommandForDAO command = null;
+
+            try {
+                command = CommandForDAO.valueOf(sc.nextLine());
+            } catch (Exception e) {
+                throw new WrongCommandEx("WRONG COMMAND");
+            }
+            if (command != null) {
+                switch (command) {
+                    case CLOSE:
+                        shablon.closeProg();
+                        break loop;
+                    case SAVE:
+                        shablon.saveEntity();
+                        CommandForEntity command1 = CommandForEntity.valueOf(sc.nextLine());
+                        switch (command1) {
+                            case STUDENT:
+                                studentDao.save(shablon.saveScannerStudent());
+                                break loop;
+                            case MENTOR:
+                                mentorDao.save(shablon.saveScannerMentor());
+                                break loop;
+                            case MANAGER:
+                                managerDao.save(shablon.saveScannerManager());
+                                break loop;
+                            case CLOSE:
+                                shablon.closeProg();
+                                break;
+                        }
+                    case FINDALL:
+                        shablon.findAllEntity();
+                        CommandForEntity command2 = CommandForEntity.valueOf(sc.nextLine());
+                        switch (command2) {
+                            case STUDENT:
+                                System.out.println(Arrays.toString(studentDao.findAll()));
+                                break loop;
+                            case MANAGER:
+                                managerDao.findAll();
+                                break loop;
+                            case MENTOR:
+                                System.out.println(Arrays.toString(mentorDao.findAll()));
+                                break loop;
+                        }
+                }
             }
         }
     }

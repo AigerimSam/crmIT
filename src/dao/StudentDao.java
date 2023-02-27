@@ -4,10 +4,12 @@ package dao;
 import model.Mentor;
 import model.Student;
 
-public interface StudentDao {
-    void save(Student student);
+import java.io.IOException;
 
-    Student[] findAll();
+public interface StudentDao extends CrudDao {
+    void save(Student student) throws IOException;
+
+    Student[] findAll() throws IOException;
 
     Student[] deleteAll();
 
